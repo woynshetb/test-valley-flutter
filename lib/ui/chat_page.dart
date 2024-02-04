@@ -110,6 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color(0xffF5F5F5), size: 24),
+        centerTitle: true,
         leading: Icon(
           Icons.arrow_back_ios,
           color: Color(0xffF5F5F5),
