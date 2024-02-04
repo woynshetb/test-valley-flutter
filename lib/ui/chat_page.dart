@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
+import 'package:testvalleyflutter/constants/app_constants.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ChatScreen extends StatefulWidget {
@@ -8,13 +9,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final String appId = "BC823AD1-FBEA-4F08-8F41-CF0D9D280FBF";
-  final String apiToken = "f93b05ff359245af400aa805bafd2a091a173064";
-  final String channelUrl =
-      "sendbird_open_channel_14092_bf4075fbb8f12dc0df3ccc5c653f027186ac9211";
-  final String apiUrl =
-      "https://api-BC823AD1-FBEA-4F08-8F41-CF0D9D280FBF.sendbird.co";
-  String userId = "WoynshetBilihatu";
 
   OpenChannel? _channel;
   List<BaseMessage> _messages = [];
@@ -38,8 +32,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<User?> connectWithSendbird() async {
     try {
-      final sendbird = SendbirdSdk(appId: appId, apiToken: apiToken);
-      final user = await sendbird.connect(userId);
+      final sendbird = SendbirdSdk(appId:AppConstants.appId, apiToken:AppConstants. apiToken);
+      final user = await sendbird.connect(AppConstants.userId);
       return user;
     } catch (e) {
       throw e;
@@ -52,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       user = await connectWithSendbird();
       setState(() {});
-      _channel = await OpenChannel.getChannel(channelUrl);
+      _channel = await OpenChannel.getChannel(AppConstants.channelUrl);
       _channel?.enter();
       setState(() {});
 
@@ -142,7 +136,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: ListView.builder(
                     itemCount: _messages.length,
                     itemBuilder: (context, index) {
-                      return userId == _messages[index].sender!.userId
+                      return AppConstants.userId == _messages[index].sender!.userId
                           ? CurrentUserChat(
                               baseMessage: _messages[index],
                             )
